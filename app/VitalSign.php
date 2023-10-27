@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class vitalSign extends Model
+class VitalSign extends Model
 {
     use SoftDeletes;
 

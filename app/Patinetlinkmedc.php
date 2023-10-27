@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class patinetlinkmedc extends Model
+class Patinetlinkmedc extends Model
 {
     protected $fillable = [
         'doc_id',

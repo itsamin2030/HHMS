@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class medciPrescription extends Model
+class MedciPrescription extends Model
 {
     protected $fillable = [
         'pre_id',
