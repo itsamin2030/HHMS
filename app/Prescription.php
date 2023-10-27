@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Prescription extends Model
 {
-  protected $primaryKey = 'prescription_id';
-  protected $fillable = ['prescription_code','prescription_p_id','prescription_doc_id', 'prescription_history','prescription_note','prescription_date'];
+    protected $fillable = [
+        'pre_date',
+        'doc_id',
+        'pat_id',
+        'note',
+        'statue',
+    ];
+
+//    protected $casts = [
+//        'pre_date' => 'datetime',
+//    ];
 }
