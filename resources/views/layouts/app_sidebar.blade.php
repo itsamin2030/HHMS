@@ -4,7 +4,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>HMS</span></a>
+              <a href="{{route('home')}}" class="site_title"><i class="fa fa-asterisk"></i> <span>HHMS</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -41,8 +41,8 @@
 
                   <li><a><i class="fas fa-edit"></i> @lang('admin_menu.patient') <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{url('out_patient')}}">@lang('admin_menu.out_patient')</a></li>
-                      <li><a href="{{url('in_patient')}}">@lang('admin_menu.in_patient')</a></li>
+{{--                      <li><a href="{{url('patient/new')}}">@lang('admin_menu.add_patient')</a></li>--}}
+                      <li><a href="{{url('patient')}}">@lang('admin_menu.patients')</a></li>
                     </ul>
                   </li>
 
@@ -145,4 +145,5 @@
                               </form>
             </div>
           </div>
+        </div>
         </div>

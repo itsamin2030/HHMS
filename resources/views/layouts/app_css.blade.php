@@ -10,13 +10,13 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('asset/assets/images/favicon.png')}}">
     <title>@yield('title')</title>
     <link href="/css/all.css" rel="stylesheet">
-    <link href="/fontawesome/css/fontawesome.min.css" rel="stylesheet">
-    <link href="/fontawesome/css/solid.min.css" rel="stylesheet">
-    <link href="/fontawesome/css/regular.min.css" rel="stylesheet">
+    <link href="/https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/regular.min.css" rel="stylesheet">
 
-    <script defer src="/fontawesome/js/brands.js"></script>
-    <script defer src="/fontawesome/js/solid.js"></script>
-    <script defer src="/fontawesome/js/fontawesome.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/brands.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/solid.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/fontawesome.min.js"></script>
 
     <link href="/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">

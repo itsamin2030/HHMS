@@ -12,17 +12,18 @@ class Patient extends Model
     use Geographical;
     protected $table = 'patients';
     protected $primaryKey = 'pat_id';
-    protected $fillable = ['birth_year','gender','pat_id','pat_name','pat_grName','pat_statue','pat_grPhone','pat_note','pat_symptoms','latitude','longitude'];
+    protected $fillable = ['birth_year','gender','pat_name','pat_grName','pat_statue','pat_grPhone','pat_note','pat_symptoms','latitude','longitude','pat_nid','pat_dist', 'pat_age', 'pat_admYear'];
 
     public function validation()
     {
     	return [
 	    	'pat_name'           => 'required',
-            'grName'             => 'required',
-            'grPhone'            => 'required',
+            'pat_grName'             => 'required',
+            'pat_grPhone'            => 'required',
             'gender'             => 'required',
             'birth_year'         => 'required',
-            'pat_statue'         => 'required'
+            'pat_dist'         => 'required',
+            'pat_nid'         => 'required'
 	    ];
     }
 

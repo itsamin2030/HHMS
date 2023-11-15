@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\RegisterController;
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 Route::post('register', [RegisterController::class, 'register']);
 
 Auth::routes();
@@ -13,15 +13,11 @@ Route::get('/admin', 'HomeController@index');
 Route::resource('department', 'DepartmentController');
 
 Route::resource('doctor', 'DoctorController');
-//Out Patient
-Route::resource('out_patient', 'OutPatientController');
-Route::get('/out_patient.datalist', 'OutPatientController@datalist');
-Route::get('out_patient.show', 'OutPatientController@show');
- 
-//In Patient
-Route::resource('in_patient', 'InPatientController');
-Route::get('inpatient.success', 'InPatientController@success');
-Route::get('inpatient.show', 'InPatientController@show');
+
+// Patient
+Route::resource('patient', 'PatientController');
+Route::get('patient.show', 'PatientController@show');
+Route::patch('patient.update', 'PatientController@update')->name('patient.update');
 
 Route::resource('employee', 'EmployeeController');
 Route::get('employees', 'EmployeeController@list')->name('employee.list');
