@@ -56,7 +56,7 @@
                                                 <a  class='btn btn-outline-secondary btn-sm' target="_blank" href="https://www.google.com/maps/search/?api=1&query={{$value->longitude}}+{{$value->latitude}}" ><i class="fa fa-home"></i></a>
 												<button  class='edit-form btn btn-outline-warning btn-sm' data-toggle='modal' data-target='#EditModal' data="{{$value->pat_id}}"><i class="fa fa-pencil"></i></button>
 												<button class="btn btn-outline-danger btn-sm delete" data="{{$value->pat_id}}"><i class="fa fa-trash-alt"></i></button>
-												<form method="get" id="success" action="{{url('inpatient.success')}}">
+												<form method="get" id="success" action="{{url('patient.success')}}">
 													<input type="hidden" readonly name="status" id="status">
 												<button id="success" type="submit" hidden></button>
 												</form>

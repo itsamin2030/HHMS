@@ -14,10 +14,13 @@ Route::resource('department', 'DepartmentController');
 
 Route::resource('doctor', 'DoctorController');
 
+Route::group(['middleware' => ['auth']], function() {
 // Patient
-Route::resource('patient', 'PatientController');
-Route::get('patient.show', 'PatientController@show');
-Route::patch('patient.update', 'PatientController@update')->name('patient.update');
+    Route::resource('patient', 'PatientController');
+    Route::get('patient.show', 'PatientController@show');
+    Route::get('patient.success', 'PatientController@success');
+    Route::patch('patient.update', 'PatientController@update')->name('patient.update');
+});
 
 Route::resource('employee', 'EmployeeController');
 Route::get('employees', 'EmployeeController@list')->name('employee.list');
