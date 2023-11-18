@@ -77,6 +77,7 @@ class DoctorController extends Controller
             'name' => $data['doc_name'],
             'email' => $data['doc_email'],
             'password' => $data['doc_password'],
+            'email_verified_at' => '2023-10-06 17:01:04',
         ]);
         Toastr::success('Added Successfully', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
