@@ -12,7 +12,6 @@ Route::get('/admin', 'HomeController@index');
 
 Route::resource('department', 'DepartmentController');
 
-Route::resource('doctor', 'DoctorController');
 
 Route::group(['middleware' => ['auth']], function() {
 // Patient
@@ -20,6 +19,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('patient.show', 'PatientController@show');
     Route::get('patient.success', 'PatientController@success');
     Route::patch('patient.update', 'PatientController@update')->name('patient.update');
+
+    Route::resource('doctor', 'DoctorController');
 });
 
 Route::resource('employee', 'EmployeeController');
