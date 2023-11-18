@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Doctor;
+use App\Event\registrationEvent;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Mail\registrationGreetings;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use DB;
+use Illuminate\Support\Facades\Mail;
 use Session;
 use File;
 use Toastr;
@@ -20,7 +25,6 @@ class DoctorController extends Controller
     public function index()
     {
         $doctor['data'] = Doctor::orderBy('doc_id', 'desc')->get();
-        $doctor['dept'] = DB::table('departments')->get();
         return view('admin.doctor.doctor_list', $doctor);
     }
 
@@ -31,8 +35,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        $dept['data'] = DB::table('departments')->get();
-        return view('admin.doctor.add_doctor', $dept);
+        return view('admin.doctor.add_doctor');
     }
 
     /**
@@ -40,6 +43,7 @@ class DoctorController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @return \App\User
      */
     public function store(Request $request)
     {
@@ -49,26 +53,31 @@ class DoctorController extends Controller
             'doc_address'        => 'required',
             'doc_email'          => 'required|email',
             'doc_password'       => 'required',
-            'doc_profile'        => 'required',
-            'doc_dept_id'        => 'required'
+            'doc_profile'        => 'required'
         ]);
-        if($request->hasFile('doc_img')) {
-            $image_type = $request->file('doc_img')->getClientOriginalExtension();
-            $path = "images/";
-            $name = 'doctor_'.time().".".$image_type;
-            $image = $request->file('doc_img')->move($path,$name);
-        }
         $data = [
             'doc_name'           => $request->doc_name,
             'doc_phone'          => $request->doc_phone,
             'doc_address'        => $request->doc_address,
             'doc_email'          => $request->doc_email,
             'doc_password'       => Hash::make($request->doc_password),
-            'doc_profile'        => $request->doc_profile,
-            'doc_dept_id'        => $request->doc_dept_id,
-            'doc_img'            => $image
+            'doc_profile'        => $request->doc_profile
         ];
         Doctor::create($data);
+        DB::table('users')->insert([
+            'name' => $data['doc_name'],
+            'email' => $data['doc_email'],
+            'password' => $data['doc_password']
+        ]);
+//        event(new registrationEvent($data['doc_email']));
+
+//        $mail = new registrationGreetings();
+//        Mail::to($data['doc_email'])->send($mail);
+        User::create([
+            'name' => $data['doc_name'],
+            'email' => $data['doc_email'],
+            'password' => $data['doc_password'],
+        ]);
         Toastr::success('Added Successfully', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
     }
@@ -93,7 +102,6 @@ class DoctorController extends Controller
     public function edit($id)
     {
         $doctor['doctor']  = Doctor::findOrFail($id);
-        $doctor['data'] = DB::table('departments')->get();
         return view('admin.doctor.edit_doctor', $doctor);
     }
 
@@ -112,32 +120,13 @@ class DoctorController extends Controller
             'doc_address'        => 'required',
             'doc_profile'        => 'required'
         ]);
-        if($request->hasFile('doc_img')) {
-            $image_type = $request->file('doc_img')->getClientOriginalExtension();
-            $path = "images/";
-            $name = 'doctor_'.time().".".$image_type;
-            $image = $request->file('doc_img')->move($path,$name);
-            if(File::exists(Doctor::findOrFail($id)->doc_img))
-            {
-                File::delete(Doctor::findOrFail($id)->doc_img);
-            }
-            $data = [
+
+        $data = [
                 'doc_name'           => $request->doc_name,
                 'doc_phone'          => $request->doc_phone,
                 'doc_address'        => $request->doc_address,
-                'doc_profile'        => $request->doc_profile,
-                'doc_dept_id'        => $request->doc_dept_id,
-                'doc_img'            => $image
-            ];
-        } else {
-            $data = [
-                'doc_name'           => $request->doc_name,
-                'doc_phone'          => $request->doc_phone,
-                'doc_address'        => $request->doc_address,
-                'doc_profile'        => $request->doc_profile,
-                'doc_dept_id'        => $request->doc_dept_id
-            ];
-        }
+                'doc_profile'        => $request->doc_profile
+        ];
         Doctor::where('doc_id', $id)->update($data);
         Toastr::success('Updated Successfully', 'Success', ["positionClass" => "toast-top-right"]);
         return back();

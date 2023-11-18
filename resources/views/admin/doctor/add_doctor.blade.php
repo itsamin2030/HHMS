@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title') Doctor | HMS @endsection
+@section('title') @lang('admin_menu.doctor') | HHMS @endsection
 @section('content')
 <div class="right_col" role="main">
   <div class="">
@@ -9,7 +9,7 @@
       </div>
     </div>
     <a href="{{url('doctor')}}">
-      <button style="margin-left: 505px;" class="btn btn-round btn-primary btn-sm">Doctor List</button>
+      <button style="margin-left: 505px;" class="btn btn-round btn-primary btn-sm">@lang('admin_menu.doctor_list')</button>
     </a>
     <div class="clearfix"></div>
 
@@ -17,8 +17,8 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Add Doctor</h2>
-            
+            <h2>@lang('admin_menu.add_doctor')</h2>
+
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
@@ -27,86 +27,62 @@
             <form class="form-horizontal form-label-left" method="POST" action="{{route('doctor.store')}}" enctype="multipart/form-data">
               @csrf
               <div class="field item form-group">
-                <label class="col-form-label col-md-3 col-sm-3 label-align" for="name">Doctor Name <span class="required">*</span>
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="name">@lang('admin_menu.doc_name') <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6">
-                  <input id="name" class="form-control" name="doc_name" placeholder="Enter Name" type="text" value="{{ old('doc_name') }}">
+                  <input id="name" class="form-control" name="doc_name" placeholder="@lang('admin_menu.doc_name')" type="text" value="{{ old('doc_name') }}">
                   <p class="text-danger">{{$errors->first('doc_name')}}</p>
                 </div>
               </div>
 
               <div class="field item form-group">
-                <label class="col-form-label col-md-3 col-sm-3 label-align" for="number">Doctor Number <span class="required">*</span>
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="number">@lang('admin_menu.doc_phone') <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6">
-                  <input type="text" id="number" name="doc_phone" placeholder="Enter Your Number" class="form-control" value="{{ old('doc_phone') }}">
+                  <input type="text" id="number" name="doc_phone" placeholder="@lang('admin_menu.doc_phone')" class="form-control" value="{{ old('doc_phone') }}">
                   <p class="text-danger">{{$errors->first('doc_phone')}}</p>
                 </div>
               </div>
 
               <div class="field item form-group">
-                <label class="col-form-label col-md-3 col-sm-3 label-align" for="address">Doctor Address <span class="required">*</span>
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="address">@lang('admin_menu.address') <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6">
-                  <input type="text" id="address" name="doc_address" placeholder="Enter Address" class="form-control" value="{{ old('doc_address') }}">
+                  <input type="text" id="address" name="doc_address" placeholder="@lang('admin_menu.address')" class="form-control" value="{{ old('doc_address') }}">
                   <p class="text-danger">{{$errors->first('doc_address')}}</p>
                 </div>
               </div>
 
               <div class="field item form-group">
-                <label for="profile" class="col-form-label col-md-3 col-sm-3  label-align">Profile <span class="required">*</span></label>
+                <label for="profile" class="col-form-label col-md-3 col-sm-3  label-align">@lang('admin_menu.doc_profile') <span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6">
-                  <input id="profile" type="text" name="doc_profile" class="form-control" placeholder="Enter Profile" value="{{ old('doc_profile') }}">
+                  <input id="profile" type="text" name="doc_profile" class="form-control" placeholder="@lang('admin_menu.doc_profile')" value="{{ old('doc_profile') }}">
                   <p class="text-danger">{{$errors->first('doc_profile')}}</p>
                 </div>
               </div>
 
               <div class="field item form-group">
-                <label for="department" class="col-form-label col-md-3 col-sm-3  label-align">Doctor Department <span class="required">*</span></label>
-                <div class="col-md-6 col-sm-6">
-                  <select class="form-control" name="doc_dept_id">
-                    @foreach($data as $value)
-                    <option value="" hidden>--Select--</option>
-                    <option value="{{ $value->dept_id }}">{{ $value->dept_name }}</option>
-                    @endforeach
-                  </select>
-                  <p class="text-danger">{{$errors->first('doc_dept_id')}}</p>
-                </div>
-              </div>
-
-              <div class="field item form-group">
-                <label class="col-form-label col-md-3 col-sm-3 label-align" for="email"> Email <span class="required">*</span>
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="email"> @lang('admin_menu.email') <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6">
-                  <input type="email" id="email" name="doc_email" placeholder="Enter Email" class="form-control" value="{{ old('doc_email') }}">
+                  <input type="email" id="email" name="doc_email" placeholder="@lang('admin_menu.email')" class="form-control" value="{{ old('doc_email') }}">
                   <p class="text-danger">{{$errors->first('doc_email')}}</p>
                 </div>
               </div>
 
               <div class="field item form-group">
-                <label class="col-form-label col-md-3 col-sm-3  label-align" for="password">Password <span class="required">*</span></label>
+                <label class="col-form-label col-md-3 col-sm-3  label-align" for="password">@lang('admin_menu.password') <span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6">
-                  <input class="form-control" type="password" id="password" name="doc_password" placeholder="Password" value="{{ old('doc_password') }}">
+                  <input class="form-control" type="password" id="password" name="doc_password" placeholder="@lang('admin_menu.password')" value="{{ old('doc_password') }}">
                   <p id="pass" class="text-danger">{{$errors->first('doc_password')}}</p>
                 </div>
               </div>
 
               <div class="field item form-group">
-                <label class="col-form-label col-md-3 col-sm-3  label-align" for="c_password">Confirm Password <span class="required">*</span></label>
+                <label class="col-form-label col-md-3 col-sm-3  label-align" for="c_password">@lang('admin_menu.c_password') <span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6">
-                  <input class="form-control" type="password" id="c_password" placeholder="Confirm Password">
+                  <input class="form-control" type="password" id="c_password" placeholder="@lang('admin_menu.c_password')">
                   <p id="cp"></p>
-                </div>
-              </div>
-
-              <div class="field item form-group">
-                <label class="col-form-label col-md-3 col-sm-3  label-align" for="telephone">Photo <span class="required">*</span>
-                </label>
-                <div class="col-md-6 col-sm-6">
-                  <img id='previmage' style="height:140px;" src="{{asset('images/blankavatar.png')}}" alt="your image" class='img-responsive img-circle'>
-                  <br>
-                  <input type="file" id="image" name="doc_img" onchange="readURL(this);" value="{{ old('doc_img') }}">
-                  <p class="text-danger">{{$errors->first('doc_img')}}</p>
                 </div>
               </div>
 

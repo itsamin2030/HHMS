@@ -42,6 +42,14 @@ return [
     'guardian_name' => 'Guardian Name',
     'guardian_phone' => 'Guardian Phone',
 
+    'doc_name' => 'Doctor Name',
+    'doc_phone' => 'Doctor Phone',
+    'doc_profile' => 'Doctor Profile',
+    'email' => 'Email',
+    'password' => 'Password',
+    'c_password' => 'Confirm Password',
+    'edit_doc' => 'Edit Doctor',
+
 
     'appointment' => 'Appointment',
     'appointment_list' => 'Appointment List',
@@ -85,5 +93,6 @@ return [
     'delete_msg' => 'Once deleted, you will not be able to recover this data!',
     'deleted' => 'Deleted!',
     'wrong' => 'Something Went Wrong!',
+    'back' => 'Back',
 
 ];
