@@ -19,6 +19,7 @@
     <script type="text/javascript" src="sweetalert.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="/ckeditor/ckeditor.js"></script>
+    <script src="https://colorlib.com/polygon/vendors/pnotify/dist/pnotify.js"></script>
     <!-- Datepicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
