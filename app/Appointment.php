@@ -11,8 +11,18 @@ class Appointment extends Model
 
     protected $fillable = [
         'pat_id',
+        'app_datetime',
         'statue',
         'patStatue',
         'recommand',
     ];
+
+    public function validation()
+    {
+        return [
+            'app_datetime'           => 'required',
+            'pat_id'           => 'required',
+            'statue'             => 'required'
+        ];
+    }
 }

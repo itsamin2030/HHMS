@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Appointment;
 use App\Doctor;
-use App\OutPatient;
+use App\Patient;
+use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 use Validator;
 use Toastr;
+use function PHPUnit\Framework\isNull;
 
 class AppointmentController extends Controller
 {
@@ -21,20 +25,40 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::all();
         $doctor = Doctor::all();
-        $patients = OutPatient::all();
+        $patients = Patient::where('pat_statue','Accepted')
+            ->join('districts','pat_dist','=','dist_id')
+            ->select('patients.*', 'districts.dist_name as district')
+            ->get();
         return view('admin.appointment.appointment_list', ['appointments'=>$appointment,'doctors' => $doctor,'patients'=>$patients]);
     }
 
     public function patient($id)
     {
-        $data = OutPatient::find($id);
-        echo json_encode($data);
+        $data['pat'] = Patient::find($id);
+        $data['district']=DB::table('districts')
+            ->where('dist_id','=',$data['pat']->pat_dist)
+            ->select('dist_name')
+            ->first();
+        return response()->json($data);
     }
 
     public function store(Request $request)
     {
         $appointment = new Appointment;
-        $validation = Validator::make($request->all(), $appointment->validation());
+        if(isNull($request->app_patStatue)){
+            $patStatue = "NA";
+        }
+        if(isNull($request->app_recomand)){
+            $recommand = "NA";
+        }
+        $data = [
+            "pat_id" => $request->app_pat_id,
+            "app_datetime"   => $request->app_datetime,
+            "patStatue"   => $patStatue,
+            "recommand"   => $recommand,
+            "statue"   => $request->app_statue,
+        ];
+        $validation = Validator::make($data, $appointment->validation());
         if($validation->fails()) {
             $status = 400;
             $response = [
@@ -42,12 +66,22 @@ class AppointmentController extends Controller
                 "errors"   => $validation->errors(),
             ];
         } else {
-            $appointment->fill($request->all())->save();
-            $status = 201;
-            $response = [
-                "status" => $status,
-                "data"   => $appointment,
-            ];
+            $onehour_date = Carbon::parse($request->app_datetime)->addHour();
+            $appointmentExists = Appointment::where('app_datetime', '>=', $request->app_datetime)->where('app_datetime', '<', $onehour_date)->whereNull('deleted_at')->exists();
+            if($appointmentExists){
+                $status = 400;
+                $response = [
+                    "status" => $status,
+                    "errors"   => 'Have appointment at same datetime.',
+                ];
+            }else{
+                $appointment->fill($data)->save();
+                $status = 201;
+                $response = [
+                    "status" => $status,
+                    "data"   => $appointment,
+                ];
+            }
         }
         return response()->json($response, $status);
     }
@@ -56,16 +90,19 @@ class AppointmentController extends Controller
     {
         $id=$request->id;
         $data['appointment']=$appointment=Appointment::find($id);
-        $data['patient']=OutPatient::find($appointment->app_p_id);
-        $data['doctor']=Doctor::find($appointment->app_doc_id);
+        $data['patient']=$patient=Patient::find($appointment['pat_id']);
+        $data['district']=DB::table('districts')
+            ->where('dist_id','=',$patient['pat_dist'])
+            ->select('dist_name')
+            ->first();
         return response()->json($data);
     }
 
     public function update(Request $request)
     {
         $id=$request->id;
-        $status=['app_status'=>$request->status];
-        Appointment::where('app_id',$id)->update($status);
+        $status=['statue'=>$request->status];
+        Appointment::where('id',$id)->update($status);
         $status = 200;
         $response = [
             "status" => $status,
@@ -73,9 +110,31 @@ class AppointmentController extends Controller
         return response()->json($response);
     }
 
+    public function updateDatetime(Request $request){
+        $id=$request->id;
+        $datetime=['app_datetime'=>$request->app_datetime];
+        $onehour_date = Carbon::parse($request->app_datetime)->addHour();
+        $appointmentExists = Appointment::where('app_datetime', '>=', $request->app_datetime)->where('app_datetime', '<', $onehour_date)->whereNull('deleted_at')->exists();
+        if($appointmentExists){
+            $status = 400;
+            $response = [
+                "status" => $status,
+                "errors"   => 'Have appointment at same datetime.',
+            ];
+        }else{
+            Appointment::where('id',$id)->update($datetime);
+            $status = 200;
+            $response = [
+                "status" => $status,
+                "data"   => $datetime,
+            ];
+        }
+        return response()->json($response, $status);
+    }
+
     public function destroy($id)
     {
-        Appointment::where('app_id', $id)->delete();
+        Appointment::where('id', $id)->delete();
         $status = 200;
         $response = [
             "status" => $status,

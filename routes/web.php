@@ -19,9 +19,19 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('patient.show', 'PatientController@show');
     Route::get('patient.success', 'PatientController@success');
     Route::patch('patient.update', 'PatientController@update')->name('patient.update');
-
+// Doctor
     Route::resource('doctor', 'DoctorController');
+    // Appointment
+    Route::resource('appointment', 'AppointmentController');
+    Route::get('appointment.success', 'AppointmentController@success');
+    Route::get('appointment.update', 'AppointmentController@update');
+    Route::post('appointment.updateDatetime', 'AppointmentController@updateDatetime');
+    Route::get('appointment.show', 'AppointmentController@show');
+    Route::resource('appointmentReport', 'AppointmentReportController');
+    Route::get('appointmentReport.show', 'AppointmentReportController@show');
 });
+
+Route::get('appointment/patient/{id}', 'AppointmentController@patient');
 
 Route::resource('employee', 'EmployeeController');
 Route::get('employees', 'EmployeeController@list')->name('employee.list');
@@ -29,13 +39,7 @@ Route::post('employee/{id}/update', 'EmployeeController@update')->name('employee
 Route::resource('employee_role', 'EmployeeRoleController');
 Route::resource('schedule', 'ScheduleController');
 
-Route::resource('appointment', 'AppointmentController');
-Route::get('appointment/patient/{id}', 'AppointmentController@patient');
-Route::get('appointment.success', 'AppointmentController@success');
-Route::get('appointment.update', 'AppointmentController@update');
-Route::get('appointment.show', 'AppointmentController@show');
-Route::resource('appointmentReport', 'AppointmentReportController');
-Route::get('appointmentReport.show', 'AppointmentReportController@show');
+
 
 
 Route::resource('bed_category', 'BedCategorieController');

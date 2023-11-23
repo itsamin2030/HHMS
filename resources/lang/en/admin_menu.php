@@ -5,6 +5,7 @@ return [
     'dashboard' => 'Dashboard',
     'actions' => 'Actions',
     'pop_sure' => 'Are you sure?',
+    'add_new' => 'Add new',
 
     'hold' => 'Hold',
     'accepted' => 'Accepted',
@@ -53,6 +54,14 @@ return [
 
     'appointment' => 'Appointment',
     'appointment_list' => 'Appointment List',
+    'add_appointment' => 'Add Appointment',
+    'schedule' => 'Schedule',
+    'app_date' => 'Appointment Date',
+    'pat_statue' => 'Patient Statue',
+    'pat_recommand' => 'Recommand for Patient',
+    'app_hold' => 'Hold',
+    'app_confirm' => 'Confirmed',
+    'app_reject' => 'Rejected',
 
     'hrm' => 'HRM',
     'emp_roles' => 'Employee Roles',

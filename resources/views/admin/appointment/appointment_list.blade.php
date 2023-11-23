@@ -1,16 +1,16 @@
 @extends('layouts.app')
-@section('title') Appointment | HMS @endsection
+@section('title') @lang('admin_menu.appointment') | HHMS @endsection
 @section('content')
 <div class="right_col" role="main">
   <div class="">
     <div class="page-title">
       <div class="title_left">
-        <h3>Appointment</h3>
+        <h3>@lang('admin_menu.appointment')</h3>
       </div>
 
       <div class="title_right">
         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-          <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#myModal">Add New</button>
+          <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#myModal">@lang('admin_menu.add_appointment')</button>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
       <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Appointment list</h2>
+            <h2>@lang('admin_menu.appointment_list')</h2>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -45,13 +45,13 @@
                   <table id="datatable" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                       <tr>
-                        <th>Sl</th>
-                        <th>Patient Name</th>
-                        <th>Patient Phone</th>
-                        <th>Doctor Name</th>
-                        <th>Schedule</th>
-                        <th>Status</th>
-                        <th>Action
+                        <th>#</th>
+                        <th>@lang('admin_menu.patient_name')</th>
+                        <th>@lang('admin_menu.guardian_phone')</th>
+                        <th>@lang('admin_menu.district')</th>
+                        <th>@lang('admin_menu.schedule')</th>
+                        <th>@lang('admin_menu.statue')</th>
+                        <th>@lang('admin_menu.actions')
                           <form method="get" id="success" action="{{url('appointment.success')}}">
                             <input type="hidden" readonly name="status" id="status">
                             <button id="success" type="submit" hidden></button>
@@ -62,50 +62,50 @@
                     <tbody>
                       @foreach($appointments as $appointment)
                       <tr>
-                        <td>{{$appointment->app_sl}}</td>
-                        <td>@php $patient=collect($patients)->where('out_p_id',$appointment->app_p_id)->first() @endphp
-                          {{$patient->out_p_name}}
+                        <td>{{$appointment->id}}</td>
+                        <td>@php $patient=collect($patients)->where('pat_id',$appointment->pat_id)->first() @endphp
+                          {{$patient->pat_name}}
                         </td>
-                        <td>{{$patient->out_p_phone}}</td>
-                        <td>@php $doctor=collect($doctors)->where('doc_id',$appointment->app_doc_id)->first() @endphp
-                          {{$doctor->doc_name}}</td>
-                        <td>{{$appointment->app_date}}</td>
-                        <td>@if($appointment->app_status=='Pending')
+                        <td>{{$patient->pat_grPhone}}</td>
+                        <td>
+                          {{$patient->district}}</td>
+                        <td id="ldatetime" get-id="{{$appointment->id}}">{{$appointment->app_datetime}}</td>
+                        <td>@if($appointment->statue=='hold')
                           <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown">
-                              Pending
+                            <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
+                              @lang('admin_menu.app_hold')
                             </button>
                             <div class="dropdown-menu">
-                              <button class="dropdown-item" id="status" data="Approved" get_id="{{$appointment->app_id}}">Approved</button>
-                              <button class="dropdown-item" id="status" data="Cancel" get_id="{{$appointment->app_id}}">Cancel</button>
+                              <button class="dropdown-item" id="status" data="confirmed" get_id="{{$appointment->id}}">@lang('admin_menu.app_confirm')</button>
+                              <button class="dropdown-item" id="status" data="rejected" get_id="{{$appointment->id}}">@lang('admin_menu.app_reject')</button>
                             </div>
                           </div>
 
-                          @elseif($appointment->app_status=='Approved')
+                          @elseif($appointment->statue=='confirmed')
                           <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
-                              Approved
+                              @lang('admin_menu.app_confirm')
                             </button>
                             <div class="dropdown-menu">
-                              <button class="dropdown-item" id="status" data="Pending" get_id="{{$appointment->app_id}}">Pending</button>
-                              <button class="dropdown-item" id="status" data="Cancel" get_id="{{$appointment->app_id}}">Cancel</button>
+                              <button class="dropdown-item" id="status" data="hold" get_id="{{$appointment->id}}">@lang('admin_menu.app_hold')</button>
+                              <button class="dropdown-item" id="status" data="rejected" get_id="{{$appointment->id}}">@lang('admin_menu.app_reject')</button>
                             </div>
                           </div>
                           @else
                           <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
-                              Cancel
+                                @lang('admin_menu.app_reject')
                             </button>
                             <div class="dropdown-menu">
-                              <button class="dropdown-item" id="status" data="Pending" get_id="{{$appointment->app_id}}">Pending</button>
-                              <button class="dropdown-item" id="status" data="Approved" get_id="{{$appointment->app_id}}">Approved</button>
+                              <button class="dropdown-item" id="status" data="hold" get_id="{{$appointment->id}}">@lang('admin_menu.app_hold')</button>
+                              <button class="dropdown-item" id="status" data="confirmed" get_id="{{$appointment->id}}">@lang('admin_menu.app_confirm')</button>
                             </div>
                           </div>
                           @endif
                         </td>
                         <td>
-                          <button class='show btn btn-outline-primary btn-sm' data-toggle='modal' data-target='#showModal' data="{{$appointment->app_id}}"><i class="fa fa-eye"></i></button>
-                          <button class="btn btn-outline-danger btn-sm delete" data="{{$appointment->app_id}}"><i class="fa fa-trash-alt"></i></button>
+                          <button class='show btn btn-outline-primary btn-sm' data-toggle='modal' data-target='#showModal' data="{{$appointment->id}}"><i class="fa fa-eye"></i></button>
+                          <button class="btn btn-outline-danger btn-sm delete" data="{{$appointment->id}}"><i class="fa fa-trash-alt"></i></button>
                         </td>
                       </tr>
                       @endforeach
@@ -127,7 +127,7 @@
     <form id="form" method="post">
       <div class="modal-content">
       <div class="modal-header" style="background-color:  #808080; height: 60px;">
-	               	<h5 class="modal-title" style="color: white;">Appointment</h5>
+	               	<h5 class="modal-title" style="color: white;">@lang('admin_menu.add_appointment')</h5>
 	             	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	               	<span aria-hidden="true" style="color: white;">&times;</span></button>
 	           	</div>
@@ -137,12 +137,12 @@
             <div class="col-md-8">
               <div class="col-md-12">
                 <div class="form-group col-md-12">
-                  <label for="app_p_id"><b>Patient</b></label>
+                  <label for="app_pat_id"><b>@lang('admin_menu.patient')</b></label>
                   <div>
-                    <select class="form-control" id="app_p_id" name="app_p_id">
+                    <select class="form-control" id="app_pat_id" name="app_pat_id">
                       <option selected hidden>-----Choose Patient-----</option>
                       @foreach($patients as $patient)
-                      <option value="{{$patient->out_p_id}}">{{$patient->out_p_name}} ({{$patient->out_p_s}})</option>
+                      <option value="{{$patient->pat_id}}">{{$patient->pat_name}} ({{$patient->pat_nid}})</option>
                       @endforeach
                     </select>
                     <span id="app_patient"></span>
@@ -152,25 +152,35 @@
 
               <div class="col-md-12">
                 <div class="form-group col-md-6">
-                  <label for="p_age"><b>Age</b></label>
+                  <label for="pat_age"><b>@lang('admin_menu.age')</b></label>
                   <div>
-                    <input type="text" readonly class="form-control" id="p_age" placeholder="Age" />
+                    <input type="text" readonly class="form-control" id="pat_age" placeholder="@lang('admin_menu.age')" />
                   </div>
                 </div>
 
                 <div class="form-group col-md-6">
-                  <label for="p_phone"><b>Phone</b></label>
+                  <label for="pat_GrPhone"><b>@lang('admin_menu.guardian_phone')</b></label>
                   <div>
-                    <input class="form-control" readonly type="text" id="p_phone" placeholder="Phone" />
+                    <input class="form-control" readonly type="text" id="pat_GrPhone" placeholder="@lang('admin_menu.guardian_phone')" />
                   </div>
                 </div>
               </div>
 
               <div class="col-md-12">
                 <div class="form-group col-md-12">
-                  <label for="app_message"><b>Message</b></label>
+                  <label for="app_patStatue"><b>@lang('admin_menu.pat_statue')</b></label>
                   <div>
-                    <textarea rows="2" class="form-control" id="app_message" placeholder="Message" name="app_message"></textarea>
+                    <textarea rows="2" class="form-control" id="app_patStatue" placeholder="@lang('admin_menu.pat_statue')" name="app_patStatue"></textarea>
+                    <span id="app_message_error"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group col-md-12">
+                  <label for="app_recommand"><b>@lang('admin_menu.pat_recommand')</b></label>
+                  <div>
+                    <textarea rows="2" class="form-control" id="app_recommand" placeholder="@lang('admin_menu.pat_recommand')" name="app_recomand"></textarea>
                     <span id="app_message_error"></span>
                   </div>
                 </div>
@@ -179,33 +189,27 @@
 
             <div class="col-md-4" style="background: #f4f4f4;">
               <div class="form-group col-md-12">
-                <label for="app_date"><b>Appointment Date</b></label>
+                <label for="app_datetime"><b>@lang('admin_menu.app_date')</b></label>
                 <div>
-                  <input class="form-control" id="app_date" placeholder="Appointment Date" name="app_date" />
+                  <input class="form-control" id="app_datetime" placeholder="@lang('admin_menu.app_date')" name="app_datetime" />
                   <span id="app_date_error"></span>
                 </div>
               </div>
 
               <div class="form-group col-md-12">
-                <label for="app_doc_id"><b>Doctor</b></label>
+                <label for="app_dist"><b>@lang('admin_menu.district')</b></label>
                 <div>
-                  <select class="form-control" id="app_doc_id" name="app_doc_id">
-                    <option selected hidden>-----Choose Doctor-----</option>
-                    @foreach($doctors as $value)
-                    <option value="{{$value->doc_id}}">{{$value->doc_name}}</option>
-                    @endforeach
-                  </select>
-                  <span id="app_doc_id_error"></span>
+                    <input class="form-control" readonly type="text" id="app_dist" placeholder="@lang('admin_menu.district')" />
                 </div>
               </div>
 
               <div class="form-group col-md-12">
-                <label for="app_status"><b>Status</b></label>
+                <label for="app_statue"><b>@lang('admin_menu.statue')</b></label>
                 <div>
-                  <select class="form-control" id="app_status" name="app_status">
-                    <option value="Pending">Pending</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Cancel">Cancel</option>
+                  <select class="form-control" id="app_statue" name="app_statue">
+                    <option value="hold">@lang('admin_menu.app_hold')</option>
+                    <option value="confirmed">@lang('admin_menu.app_confirm')</option>
+                    <option value="rejected">@lang('admin_menu.app_reject')</option>
                   </select>
                   <span id="app_status_error"></span>
                 </div>
@@ -217,63 +221,77 @@
           <button type="button" class="btn btn-dark btn-sm" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-success btn-sm">Save</button>
         </div>
-      </div>
+        </div>
     </form>
   </div>
 </div>
+
 <!-- SHOW MODAL -->
 <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-    <div class="modal-header" style="background-color:  #808080; height: 60px;">
-	               	<h5 class="modal-title" style="color: white;">Appointment</h5>
-	             	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	               	<span aria-hidden="true" style="color: white;">&times;</span></button>
-	           	</div>
-      <div class="modal-body">
-        <div>
-          <h6 style="display:inline"><b>Appointment Date:</b></h6>
-          <p style="display:inline" id="s_app_date"></p>
-        </div>
-        <div>
-          <h6 style="display:inline"><b>Appointment SL:</b></h6>
-          <p style="display:inline" id="s_app_sl"></p>
-        </div>
-        <div>
-          <h6 style="display:inline"><b>Patient:</b></h6>
-          <p style="display:inline" id="s_p_name"></p>
-        </div>
-        <div>
-          <h6 style="display:inline"><b>Patient Phone:</b></h6>
-          <p id="s_p_phone" style="display:inline"></p>
-        </div>
-        <div>
-          <h6 style="display:inline"><b>Patient Age:</b></h6>
-          <p id="s_p_age" style="display:inline"></p>
-        </div>
-        <div>
-          <h6 style="display:inline"><b>Doctor:</b></h6>
-          <p id="s_doc_name" style="display:inline"></p>
-        </div>
-        <div>
-          <h6 style="display:inline"><b>Doctor Phone:</b></h6>
-          <p id="s_doc_phone" style="display:inline"></p>
-        </div>
-        <div>
-          <h6 style="display:inline"><b>Appointment Status:</b></h6>
-          <p id="s_app_status" style="display:inline"></p>
-        </div>
-        <div>
-          <h6 style="display:inline"><b>Appointment Note:</b></h6>
-          <p id="s_app_note" style="display:inline"></p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:  #808080; height: 60px;">
+                <h5 class="modal-title" style="color: white;">@lang('admin_menu.appointment')</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: white;">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.appointment') #</b></h6>
+                    <p style="display:inline" id="mapp_id"></p>
+                </div>
 
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.schedule'):</b></h6>
+                    <p style="display:inline" id="mapp_datetime"></p>
+                </div>
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.patient_name'):</b></h6>
+                    <p style="display:inline" id="mpat_name"></p>
+                </div>
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.NiD'):</b></h6>
+                    <p style="display:inline" id="mpat_NiD"></p>
+                </div>
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.guardian_name'):</b></h6>
+                    <p id="mpat_grName" style="display:inline"></p>
+                </div>
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.guardian_phone'):</b></h6>
+                    <p style="display:inline" id="mpat_grPhone"></p>
+                </div>
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.age'):</b></h6>
+                    <p style="display:inline" id="mpat_age"></p>
+                </div>
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.gender'):</b></h6>
+                    <p id="mgender" style="display:inline"></p>
+                </div>
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.district'):</b></h6>
+                    <p id="mdistrict" style="display:inline"></p>
+                </div>
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.symptoms'):</b></h6>
+                    <p id="mpat_symptoms" style="display:inline"></p>
+                </div>
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.note'):</b></h6>
+                    <p id="mpat_note" style="display:inline"></p>
+                </div>
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.location'):</b></h6>
+                    <a href="#" id="mlocation" target="_blank" class="btn btn-round btn-info btn-sm">@lang('admin_menu.google_maps')</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>
 
 @endsection
@@ -282,15 +300,16 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
-    $(document).on("change", "#app_p_id", function() {
-      var app_p_id = $(this).val();
+    $(document).on("change", "#app_pat_id", function() {
+      var app_pat_id = $(this).val();
       $.ajax({
-        url: "{{url('appointment')}}" + "/patient/" + app_p_id,
+        url: "{{url('appointment')}}" + "/patient/" + app_pat_id,
         type: 'get',
         dataType: "json",
         success: function(data) {
-          $("#p_phone").val(data.out_p_phone);
-          $("#p_age").val(data.out_p_age);
+          $("#pat_GrPhone").val(data.pat.pat_grPhone);
+          $("#pat_age").val(data.pat.pat_age);
+          $("#app_dist").val(data.district.dist_name);
         }
       });
     });
@@ -311,9 +330,17 @@
         },
         error: function(errors) {
           let error = JSON.parse(errors.responseText).errors;
-          $.each(error, function(i, message) {
-            $("#" + i + "_error").html('<span class="help-block" style="color:red;">' + message + '</span>');
-          });
+          if(error='Have appointment at same datetime.'){
+              new PNotify({
+                  title: 'Warning',
+                  text: 'Have appointment at same datetime.',
+                  styling: 'bootstrap3'
+              });
+          }else{
+              $.each(error, function(i, message) {
+                  $("#" + i + "_error").html('<span class="help-block" style="color:red;">' + message + '</span>');
+              });
+          }
         }
       });
     });
@@ -376,26 +403,97 @@
         },
         dataType: 'json',
         success: function(data) {
-          $("#s_app_date").text(data.appointment.app_date);
-          $("#s_app_sl").text(data.appointment.app_sl);
-          $("#s_p_name").text(data.patient.out_p_name);
-          $("#s_p_phone").text(data.patient.out_p_phone);
-          $("#s_p_age").text(data.patient.out_p_age);
-          $("#s_doc_name").text(data.doctor.doc_name);
-          $("#s_doc_phone").text(data.doctor.doc_phone);
-          $("#s_app_status").text(data.appointment.app_status);
-          $("#s_app_note").text(data.appointment.app_message);
+            $("#mapp_id").text(data.appointment.id);
+            $("#mapp_datetime").text(data.appointment.app_datetime);
+            $("#mpat_name").text(data.patient.pat_name);
+            $("#mpat_NiD").text(data.patient.pat_nid);
+            $("#mpat_grName").text(data.patient.pat_grName);
+            $("#mpat_grPhone").text(data.patient.pat_grPhone);
+            $("#mpat_age").text(data.patient.pat_age);
+            $("#mgender").text(data.patient.gender);
+            $("#mdistrict").text(data.district.dist_name);
+            $("#mpat_symptoms").text(data.patient.pat_symptoms);
+            $('#mpat_note').text(data.patient.pat_note);
+            // Google Maps
+            $('#mlocation').attr('href','https://www.google.com/maps/search/?api=1&query='+data.patient.longitude+','+data.patient.latitude);
+            // End
         }
       });
     });
 
+    // edit datetime
+      $(document).on('dblclick', '#ldatetime', function() {
+          var toggleDatetime = $(this).html();
+          if(toggleDatetime.search("form")=="-1"){
+              var id = $(this).attr("get-id");
+              var ldatetime = $(this).html();
+              $(this).html('<form id="ldatetimeform" method="post"><input type="hidden" id="lapp_id" value="'+id+'" ><input class="form-control" id="lapp_datetime" value="'+ldatetime+'" placeholder="@lang("admin_menu.app_date")"name="app_datetime"/> <button class="btn btn-outline-success btn-sm" type="submit"><i class="fa fa-pencil"></i></button> <button class="btn btn-outline-danger btn-sm"  id="lclose-btn" type="button"><i class="fa fa-close"></i></button> </form>'
+              );
+              $(document).on('click', '#lclose-btn', function(){
+                  $('[get-id='+id+']').html(ldatetime);
+              });
+          }
+      });
+      $(document).on('submit', '#ldatetimeform', function (e) {
+          e.preventDefault();
+          var data = $(this).serializeArray();
+
+          var app_id = $('#lapp_id').val();
+          var app_datetime = $('#lapp_datetime').val();
+          $.ajax({
+              url: "{{url('appointment.updateDatetime')}}",
+              type: "post",
+              data: {
+                  id: app_id,
+                  app_datetime: app_datetime
+              },
+              dataType: "json",
+              success: function (data) {
+                  $('[get-id='+app_id+']').html(app_datetime);
+              },
+              error: function(errors) {
+                  let error = JSON.parse(errors.responseText).errors;
+                  if(error='Have appointment at same datetime.'){
+                      new PNotify({
+                          title: 'Warning',
+                          text: 'Have appointment at same datetime.',
+                          styling: 'bootstrap3'
+                      });
+                  }else{
+                      $.each(error, function(i, message) {
+                          $("#" + i + "_error").html('<span class="help-block" style="color:red;">' + message + '</span>');
+                      });
+                  }
+              }
+          });
+      });
+
+      $(document).on('change', '#app_datetime,#lapp_datetime', function() {
+          var odatetime = $(this).val();
+          const arraydt = odatetime.split(':');
+          var newDatetime = arraydt[0]+":00:00";
+          $(this).val(newDatetime);
+          if(arraydt[1]>0){
+              new PNotify({
+                  title: 'Warning',
+                  text: "You can't using a minutes.",
+                  styling: 'bootstrap3'
+              });
+          }
+      });
   });
 
 
   $("#example").dataTable();
 
   jQuery(function($) {
-    $("#app_date").datetimepicker({
+    $("#app_datetime").datetimepicker({
+      dateFormat: 'yy-mm-dd',
+    });
+  });
+
+  jQuery(function($) {
+    $("#lapp_datetime").datetimepicker({
       dateFormat: 'yy-mm-dd',
     });
   });
