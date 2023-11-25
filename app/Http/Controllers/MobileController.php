@@ -67,37 +67,20 @@ class MobileController extends Controller
         return response()->json($response,$status);
     }
 
-    public function readCountComingAppointment(Request $request){
+    public function readCountAppointment(Request $request){
         $token = $request->token;
         if(is_null($token)){
             return response()->json("Token is Null",500);
         }{
             if(Patient::where('token',$token)->exists()){
                 $pat = Patient::where('token',$token)->first();
+                $counthold = Appointment::where('pat_id','=',$pat->pat_id)->where('app_datetime','>','')->where('statue','=','hold')->count();
                 $countcoming = Appointment::where('pat_id','=',$pat->pat_id)->where('app_datetime','>','')->count();
                 $status = 200;
                 $response = [
                     "status" => $status,
-                    "count"   => $countcoming,
-                ];
-                return response()->json($response,$status);
-            }else{
-                return response()->json("Token is Not Matched",500);
-            }
-        }
-    }
-    public function readCountHoldAppointment(Request $request){
-        $token = $request->token;
-        if(is_null($token)){
-            return response()->json("Token is Null",500);
-        }{
-            if(Patient::where('token',$token)->exists()){
-                $pat = Patient::where('token',$token)->first();
-                $countcoming = Appointment::where('pat_id','=',$pat->pat_id)->where('app_datetime','>','')->where('statue','=','hold')->count();
-                $status = 200;
-                $response = [
-                    "status" => $status,
-                    "count"   => $countcoming,
+                    "countcoming"   => $countcoming,
+                    "countholding"   => $countcoming,
                 ];
                 return response()->json($response,$status);
             }else{
