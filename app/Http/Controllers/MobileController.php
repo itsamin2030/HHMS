@@ -74,8 +74,11 @@ class MobileController extends Controller
         }{
             if(Patient::where('token',$token)->exists()){
                 $pat = Patient::where('token',$token)->first();
-                $counthold = Appointment::where('pat_id','=',$pat->pat_id)->where('app_datetime','>','')->where('statue','=','hold')->count();
-                $countcoming = Appointment::where('pat_id','=',$pat->pat_id)->where('app_datetime','>','')->count();
+                $counthold = Appointment::where('pat_id','=',$pat->pat_id)
+                    ->where('app_datetime','>',(new DateTime)->format('Y-m-d'))
+                    ->where('statue','==','hold')
+                    ->count();
+                $countcoming = Appointment::where('pat_id','=',$pat->pat_id)->where('app_datetime','>',(new DateTime)->format('Y-m-d'))->count();
                 $status = 200;
                 $response = [
                     "status" => $status,
