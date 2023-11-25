@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use App\Patient;
+use DateTime;
 use Illuminate\Http\Request;
 use App\Verify\Service;
 use Illuminate\Support\Facades\Hash;
