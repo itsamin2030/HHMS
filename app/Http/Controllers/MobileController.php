@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Patient;
 use Illuminate\Http\Request;
 use App\Verify\Service;
+use function Sodium\add;
 
 class MobileController extends Controller
 {
@@ -25,8 +26,10 @@ class MobileController extends Controller
             $response = [
                 "status" => $status,
                 "data"   => $verification->isValid(),
-                "error"   => @$verification->getErrors(),
             ];
+            if(!$verification->isValid()){
+                array_push($response,['errors'=>$verification->getErrors()]);
+            }
         }else{
             $status = 400;
             $response = [
