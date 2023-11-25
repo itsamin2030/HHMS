@@ -79,12 +79,62 @@ class MobileController extends Controller
                     ->where('statue','=','hold')
                     ->where('app_datetime','>',(new DateTime)->format('Y-m-d 00:00:00'))
                     ->count();
+                $countold = Appointment::where('pat_id','=',$pat->pat_id)
+                    ->where('statue','=','confirmed')
+                    ->where('app_datetime','<',(new DateTime)->format('Y-m-d 00:00:00'))
+                    ->count();
                 $countcoming = Appointment::where('pat_id','=',$pat->pat_id)->where('app_datetime','>',(new DateTime)->format('Y-m-d 00:00:00'))->count();
                 $status = 200;
                 $response = [
                     "status" => $status,
                     "countcoming"   => $countcoming,
                     "countholding"   => $counthold,
+                    "countold"   => $countold,
+                ];
+                return response()->json($response,$status);
+            }else{
+                return response()->json("Token is Not Matched",500);
+            }
+        }
+    }
+
+    public function getAppointmentlist (Request $request){
+        $token = $request->token;
+        $type = $request->reqtype;
+        if(is_null($token)){
+            return response()->json("Token is Null",500);
+        }{
+            if(Patient::where('token',$token)->exists()){
+                $pat = Patient::where('token',$token)->first();
+                switch ($type){
+                    case 'coming':
+                        $appointmentlist = Appointment::where('pat_id','=',$pat->pat_id)
+                            ->where('app_datetime','>',(new DateTime)->format('Y-m-d 00:00:00'))
+                            ->select('id', 'app_datetime', 'statue')
+                            ->get();
+                        break;
+                    case 'hold':
+                        $appointmentlist = Appointment::select('id', 'app_datetime', 'statue')
+                            ->where('pat_id','=',$pat->pat_id)
+                            ->where('statue','=','hold')
+                            ->where('app_datetime','>',(new DateTime)->format('Y-m-d 00:00:00'))
+                            ->get();
+                        break;
+                    case 'old':
+                        $appointmentlist = Appointment::where('pat_id','=',$pat->pat_id)
+                            ->where('statue','=','confirmed')
+                            ->where('app_datetime','<',(new DateTime)->format('Y-m-d 00:00:00'))
+                            ->select('id', 'app_datetime', 'statue')
+                            ->get();
+                        break;
+                    default:
+                        $appointmentlist = Appointment::select('id', 'app_datetime', 'statue')->get();
+                        break;
+                }
+                $status = 200;
+                $response = [
+                    "status" => $status,
+                    "appointments"   => $appointmentlist,
                 ];
                 return response()->json($response,$status);
             }else{
