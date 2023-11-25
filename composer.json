@@ -14,7 +14,8 @@
         "laravel/framework": "^10.12",
         "laravel/tinker": "^2.8",
         "malhal/laravel-geographical": "^1.0",
-        "realrashid/sweet-alert": "^7.1"
+        "realrashid/sweet-alert": "^7.1",
+        "twilio/sdk": "^7.12"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar":"^3.8",
