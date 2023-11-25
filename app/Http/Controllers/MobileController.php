@@ -86,8 +86,7 @@ class MobileController extends Controller
                     "countcoming"   => $countcoming,
                     "countholding"   => $countcoming,
                 ];
-//                return response()->json($response,$status);
-                return $countcoming;
+                return response()->json($response,$status);
             }else{
                 return response()->json("Token is Not Matched",500);
             }
