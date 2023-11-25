@@ -20,4 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/verify', 'MobileController@verify');
 Route::post('/verify', 'MobileController@checkVerify');
 // appointment
-Route::get('/appointment/getcountcoming','MobileController@readCountAppointment');
+Route::get('/appointment/getcount','MobileController@readCountAppointment');
