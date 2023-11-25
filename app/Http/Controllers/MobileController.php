@@ -84,7 +84,7 @@ class MobileController extends Controller
                 $response = [
                     "status" => $status,
                     "countcoming"   => $countcoming,
-                    "countholding"   => $countcoming,
+                    "countholding"   => $counthold,
                 ];
                 return response()->json($response,$status);
             }else{
