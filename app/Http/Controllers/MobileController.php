@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Verify\Service;
 use Illuminate\Support\Facades\Hash;
 use function PHPUnit\Framework\isNull;
+use DB;
 
 class MobileController extends Controller
 {
@@ -110,11 +111,19 @@ class MobileController extends Controller
                     case 'coming':
                         $appointmentlist = Appointment::where('pat_id','=',$pat->pat_id)
                             ->where('app_datetime','>',(new DateTime)->format('Y-m-d 00:00:00'))
-                            ->select('id', 'app_datetime', 'statue')
+                            ->select('id', 'app_datetime', 'statue', DB::raw("CASE
+        WHEN statue = 'rejected' THEN '#FF0000'  -- Red
+        WHEN statue = 'hold' THEN '#FFFF00'      -- Yellow
+        WHEN statue = 'confirmed' THEN '#00FF00' -- Green
+        END AS color"))
                             ->get();
                         break;
                     case 'hold':
-                        $appointmentlist = Appointment::select('id', 'app_datetime', 'statue')
+                        $appointmentlist = Appointment::select('id', 'app_datetime', 'statue', DB::raw("CASE
+        WHEN statue = 'rejected' THEN '#FF0000'  -- Red
+        WHEN statue = 'hold' THEN '#FFFF00'      -- Yellow
+        WHEN statue = 'confirmed' THEN '#00FF00' -- Green
+        END AS color"))
                             ->where('pat_id','=',$pat->pat_id)
                             ->where('statue','=','hold')
                             ->where('app_datetime','>',(new DateTime)->format('Y-m-d 00:00:00'))
@@ -124,7 +133,11 @@ class MobileController extends Controller
                         $appointmentlist = Appointment::where('pat_id','=',$pat->pat_id)
                             ->where('statue','=','confirmed')
                             ->where('app_datetime','<',(new DateTime)->format('Y-m-d 00:00:00'))
-                            ->select('id', 'app_datetime', 'statue')
+                            ->select('id', 'app_datetime', 'statue', DB::raw("CASE
+        WHEN statue = 'rejected' THEN '#FF0000'  -- Red
+        WHEN statue = 'hold' THEN '#FFFF00'      -- Yellow
+        WHEN statue = 'confirmed' THEN '#00FF00' -- Green
+        END AS color"))
                             ->get();
                         break;
                     default:
