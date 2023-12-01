@@ -111,7 +111,7 @@ class MobileController extends Controller
                     case 'coming':
                         $appointmentlist = Appointment::where('pat_id','=',$pat->pat_id)
                             ->where('app_datetime','>',(new DateTime)->format('Y-m-d 00:00:00'))
-                            ->select('id', 'app_datetime', 'statue', DB::raw("CASE
+                            ->select('id', 'app_datetime', 'statue','patStatue','recommand', DB::raw("CASE
         WHEN statue = 'rejected' THEN '#FF0000'  -- Red
         WHEN statue = 'hold' THEN '#FFFF00'      -- Yellow
         WHEN statue = 'confirmed' THEN '#00FF00' -- Green
@@ -119,7 +119,7 @@ class MobileController extends Controller
                             ->get();
                         break;
                     case 'hold':
-                        $appointmentlist = Appointment::select('id', 'app_datetime', 'statue', DB::raw("CASE
+                        $appointmentlist = Appointment::select('id', 'app_datetime', 'statue','patStatue','recommand', DB::raw("CASE
         WHEN statue = 'rejected' THEN '#FF0000'  -- Red
         WHEN statue = 'hold' THEN '#FFFF00'      -- Yellow
         WHEN statue = 'confirmed' THEN '#00FF00' -- Green
@@ -133,7 +133,7 @@ class MobileController extends Controller
                         $appointmentlist = Appointment::where('pat_id','=',$pat->pat_id)
                             ->where('statue','=','confirmed')
                             ->where('app_datetime','<',(new DateTime)->format('Y-m-d 00:00:00'))
-                            ->select('id', 'app_datetime', 'statue', DB::raw("CASE
+                            ->select('id', 'app_datetime', 'statue','patStatue','recommand', DB::raw("CASE
         WHEN statue = 'rejected' THEN '#FF0000'  -- Red
         WHEN statue = 'hold' THEN '#FFFF00'      -- Yellow
         WHEN statue = 'confirmed' THEN '#00FF00' -- Green
