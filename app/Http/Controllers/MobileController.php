@@ -165,10 +165,10 @@ class MobileController extends Controller
         }else{
             switch ($type){
                 case 'confirmed':
-                    Appointment::where('id',$appId)->update($type);
+                    Appointment::where('id',$appId)->update(['statue'=> $type]);
                 break;
                 case 'rejected':
-                    Appointment::where('id',$appId)->update($type);
+                    Appointment::where('id',$appId)->update(['statue'=> $type]);
                 break;
             }
         }
