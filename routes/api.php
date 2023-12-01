@@ -22,3 +22,4 @@ Route::post('/verify', 'MobileController@checkVerify');
 // appointment
 Route::get('/appointment/getcount','MobileController@readCountAppointment');
 Route::get('/appointment/list','MobileController@getAppointmentlist');
+Route::get('/appointment/patupdate','MobileController@updateAppointmentByPat');

@@ -104,7 +104,7 @@ class MobileController extends Controller
         $type = $request->reqtype;
         if(is_null($token)){
             return response()->json("Token is Null",500);
-        }{
+        }else{
             if(Patient::where('token',$token)->exists()){
                 $pat = Patient::where('token',$token)->first();
                 switch ($type){
@@ -152,6 +152,24 @@ class MobileController extends Controller
                 return response()->json($response,$status);
             }else{
                 return response()->json("Token is Not Matched",500);
+            }
+        }
+    }
+
+    public function updateAppointmentByPat (Request $request){
+        $token = $request->token;
+        $type = $request->reqtype;
+        $appId = $request->appId;
+        if(is_null($token)){
+            return response()->json("Token is Null",500);
+        }else{
+            switch ($type){
+                case 'confirmed':
+                    Appointment::where('id',$appId)->update($type);
+                break;
+                case 'rejected':
+                    Appointment::where('id',$appId)->update($type);
+                break;
             }
         }
     }
