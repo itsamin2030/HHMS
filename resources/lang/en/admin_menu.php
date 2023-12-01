@@ -57,6 +57,7 @@ return [
     'add_appointment' => 'Add Appointment',
     'schedule' => 'Schedule',
     'app_date' => 'Appointment Date',
+    'app_writeReport' => 'Write Report',
     'pat_statue' => 'Patient Statue',
     'pat_recommand' => 'Recommand for Patient',
     'app_hold' => 'Hold',

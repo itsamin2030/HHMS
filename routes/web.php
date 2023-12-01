@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('appointment', 'AppointmentController');
     Route::get('appointment.success', 'AppointmentController@success');
     Route::get('appointment.update', 'AppointmentController@update');
+    Route::post('appointment.report', 'AppointmentController@writereport')->name('appointment.report');
     Route::post('appointment.updateDatetime', 'AppointmentController@updateDatetime');
     Route::get('appointment.show', 'AppointmentController@show');
     Route::resource('appointmentReport', 'AppointmentReportController');

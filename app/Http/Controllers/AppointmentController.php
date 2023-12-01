@@ -91,6 +91,10 @@ class AppointmentController extends Controller
         $id=$request->id;
         $data['appointment']=$appointment=Appointment::find($id);
         $data['patient']=$patient=Patient::find($appointment['pat_id']);
+        $app_datetime = Carbon::parse($appointment['app_datetime']);
+        if ($app_datetime->isToday()||$app_datetime->isYesterday()&&$appointment->statue=='confirmed'){
+            $data['report'] = 1;
+        }else{$data['report'] = 0;}
         $data['district']=DB::table('districts')
             ->where('dist_id','=',$patient['pat_dist'])
             ->select('dist_name')
@@ -103,6 +107,18 @@ class AppointmentController extends Controller
         $id=$request->id;
         $status=['statue'=>$request->status];
         Appointment::where('id',$id)->update($status);
+        $status = 200;
+        $response = [
+            "status" => $status,
+        ];
+        return response()->json($response);
+    }
+
+    public function writereport(Request $request)
+    {
+        $id=$request->app_id;
+        $data=['patStatue'=>$request->patStatue,'recommand'=>$request->recommand];
+        Appointment::where('id',$id)->update($data);
         $status = 200;
         $response = [
             "status" => $status,

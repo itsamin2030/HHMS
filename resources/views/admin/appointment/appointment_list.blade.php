@@ -245,6 +245,16 @@
                     <h6 style="display:inline"><b>@lang('admin_menu.schedule'):</b></h6>
                     <p style="display:inline" id="mapp_datetime"></p>
                 </div>
+
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.pat_statue'):</b></h6>
+                    <p style="display:inline" id="mapp_patstatue"></p>
+                </div>
+
+                <div>
+                    <h6 style="display:inline"><b>@lang('admin_menu.pat_recommand'):</b></h6>
+                    <p style="display:inline" id="mapp_recommand"></p>
+                </div>
                 <div>
                     <h6 style="display:inline"><b>@lang('admin_menu.patient_name'):</b></h6>
                     <p style="display:inline" id="mpat_name"></p>
@@ -287,12 +297,64 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" id='writebtn' class="btn btn-primary" data-toggle='modal' data-target='#reportModal' disabled>@lang('admin_menu.app_writeReport')</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
 
         </div>
     </div>
 </div>
+<!-- Write Report Modal -->
+<div id="reportModal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <form id="reportform" method="post">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:  #808080; height: 60px;">
+                    <h5 class="modal-title" style="color: white;">@lang('admin_menu.app_writeReport')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color: white;">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group col-md-12">
+                                    <label for="app_id"><b>@lang('admin_menu.appointment') #</b></label>
+                                    <div>
+                                        <input type="text" class="form-control" id="rapp_id" name="app_id" data-noreset='true' readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group col-md-6">
+                                    <label for="rpat_statue"><b>@lang('admin_menu.pat_statue')</b></label>
+                                    <div>
+                                        <input type="text" name="patStatue" class="form-control" id="rpat_statue" placeholder="@lang('admin_menu.pat_statue')" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="rpat_recommand"><b>@lang('admin_menu.pat_recommand')</b></label>
+                                    <div>
+                                        <input class="form-control" name="recommand" type="text" id="rpat_recommand" placeholder="@lang('admin_menu.pat_recommand')" />
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="clearreportform()" class="btn btn-warning btn-sm" >Clear</button>
+                    <button type="button" class="btn btn-dark btn-sm" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 @endsection
 
@@ -405,6 +467,8 @@
         success: function(data) {
             $("#mapp_id").text(data.appointment.id);
             $("#mapp_datetime").text(data.appointment.app_datetime);
+            $("#mapp_patstatue").text(data.appointment.patStatue);
+            $("#mapp_recommand").text(data.appointment.recommand);
             $("#mpat_name").text(data.patient.pat_name);
             $("#mpat_NiD").text(data.patient.pat_nid);
             $("#mpat_grName").text(data.patient.pat_grName);
@@ -417,9 +481,53 @@
             // Google Maps
             $('#mlocation').attr('href','https://www.google.com/maps/search/?api=1&query='+data.patient.longitude+','+data.patient.latitude);
             // End
+            if(data.report==1){
+                $('#writebtn').attr('disabled',null);
+                $('#writebtn').attr('data',data.appointment.id);
+            }else{$('#writebtn').attr('disabled','disabled');}
         }
       });
     });
+
+      $(document).on('click', '#writebtn', function() {
+          var id = $(this).attr("data");
+          $.ajax({
+              url: "{{url('appointment.show')}}",
+              type: 'get',
+              data: {
+                  id: id
+              },
+              dataType: 'json',
+              success: function(data) {
+                  $("#rapp_id").val(data.appointment.id);
+                  $("#rpat_statue").val(data.appointment.patStatue);
+                  $("#rpat_recommand").val(data.appointment.recommand);
+                  if(data.report==1){
+                      $('#writebtn').attr('disabled',null);
+                  }else{$('#writebtn').attr('disabled','disabled');}
+              }
+          });
+      });
+
+      $(document).on("submit", "#reportform", function(e) {
+          e.preventDefault();
+          var data = $(this).serializeArray();
+
+          $.ajax({
+              url: "{{route('appointment.report')}}",
+              data: data,
+              type: "post",
+              dataType: "json",
+              success: function(data) {
+                  $('#status').val('Report was Wrote.');
+                  $('#success').submit();
+              },
+              error: function(errors) {
+                  let error = JSON.parse(errors.responseText).errors;
+              }
+          });
+      });
+
 
     // edit datetime
       $(document).on('dblclick', '#ldatetime', function() {
@@ -483,6 +591,12 @@
       });
   });
 
+  function clearreportform() {
+      var fieldsToReset = document.querySelectorAll("input:not([data-noreset='true'])")
+      for(var i=0;i<fieldsToReset.length;i++){
+          fieldsToReset[i].value = null;
+      }
+  }
 
   $("#example").dataTable();
 
