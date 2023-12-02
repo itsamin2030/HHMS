@@ -141,7 +141,11 @@ class MobileController extends Controller
                             ->get();
                         break;
                     default:
-                        $appointmentlist = Appointment::select('id', 'app_datetime', 'statue')->get();
+                        $appointmentlist = Appointment::select('id', 'app_datetime', 'statue','patStatue','recommand', DB::raw("CASE
+        WHEN statue = 'rejected' THEN '#FF0000'  -- Red
+        WHEN statue = 'hold' THEN '#FFFF00'      -- Yellow
+        WHEN statue = 'confirmed' THEN '#00FF00' -- Green
+        END AS color"))->orderByDesc('app_datetime')->get();
                         break;
                 }
                 $status = 200;
