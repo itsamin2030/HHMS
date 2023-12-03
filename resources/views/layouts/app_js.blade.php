@@ -23,7 +23,7 @@
     <!-- Datepicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{{--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>--}}
 
     <script type="text/javascript">
     $.ajaxSetup({
