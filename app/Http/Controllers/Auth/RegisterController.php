@@ -67,10 +67,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        event(new registrationEvent($data['email']));
+        // event(new registrationEvent($data['email']));
 
-        $mail = new registrationGreetings();
-        Mail::to($data['email'])->send($mail);
+        // $mail = new registrationGreetings();
+        // Mail::to($data['email'])->send($mail);
         
 
         return User::create([
