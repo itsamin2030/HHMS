@@ -25,12 +25,6 @@
                 <ul class="nav side-menu">
                 <li><a href="/"><i class="fas fa-home"></i> @lang('admin_menu.dashboard') </a>
 
-                </li>
-                  <li><a><i class="fas fa-sitemap"></i> @lang('admin_menu.department') <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{url('department')}}">@lang('admin_menu.department_list')</a></li>
-                    </ul>
-                  </li>
 
                   <li><a><i class="fa fa-user-md"></i> @lang('admin_menu.doctor') <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
