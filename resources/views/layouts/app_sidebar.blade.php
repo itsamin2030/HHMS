@@ -60,13 +60,6 @@
                     </ul>
                   </li>
 
-                  <li><a><i class="fas fa-notes-medical"></i> @lang('admin_menu.prescription') <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{route('prescription.create')}}">@lang('admin_menu.add_prescription')</a></li>
-                      <li><a href="{{route('prescription.index')}}">@lang('admin_menu.prescription_list')</a></li>
-                    </ul>
-                  </li>
-
                 </ul>
               </div>
             </div>
