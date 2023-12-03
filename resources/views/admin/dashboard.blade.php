@@ -214,7 +214,7 @@
           <div class="col-md-4 col-sm-4 ">
               <div class="x_panel tile fixed_height_320">
                   <div class="x_title">
-                      <h2>Quick Settings</h2>
+                      <h2>Quick Links</h2>
                       <ul class="nav navbar-right panel_toolbox">
                           <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                           </li>
@@ -233,17 +233,16 @@
                   <div class="x_content">
                       <div class="dashboard-widget-content">
                           <ul class="quick-list">
-                              <li><i class="fa fa-calendar"></i><a href="#"> Settings</a>
+                              <li><a href="#/plus-square"><i class="fa fa-plus-square"></i> Create a doctor</a>
                               </li>
-                              <li><i class="fa fa-bars"></i><a href="#"> Subscription</a>
+                              <li><a href="#/list-ul"><i class="fa fa-list-ul"></i> View Appointments</a>
                               </li>
-                              <li><i class="fa fa-bar-chart"></i><a href="#"> Auto Renewal</a> </li>
-                              <li><i class="fa fa-line-chart"></i><a href="#"> Achievements</a>
+                              <li><a href="#/wheelchair"><i class="fa fa-wheelchair"></i> View patients</a> </li>
+                              <li><a href="#/user-md"><i class="fa fa-user-md"></i> View doctors</a>
                               </li>
-                              <li><i class="fa fa-bar-chart"></i><a href="#"> Auto Renewal</a> </li>
-                              <li><i class="fa fa-line-chart"></i><a href="#"> Achievements</a>
-                              </li>
-                              <li><i class="fa fa-area-chart"></i><a href="#"> Logout</a>
+                          
+                      
+                              <li><a href="#/sign-out"><i class="fa fa-sign-out"></i> Logout</a>
                               </li>
                           </ul>
 
