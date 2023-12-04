@@ -227,10 +227,9 @@ class MobileController extends Controller
         }else{
             if(Patient::where('token',$token)->exists()){
                 $pat = Patient::where('token',$token)->first();
-                $type = '`'.$request->vitaltype.'`';
                 $vital = new VitalSign;
                 $data = [
-                    'pat_id' => $request->vitalId,
+                    'pat_id' => $pat->pat_id,
                     'vsNum' => $request->vsNum,
                     'vsNum2' => $request->vsNum2,
                     'type' => $request->vitaltype,
