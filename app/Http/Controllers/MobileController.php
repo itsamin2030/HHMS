@@ -222,6 +222,9 @@ class MobileController extends Controller
 
     public function createVital (Request $request){
         $token = $request->token;
+        if(!isset($request->vsNum2)||is_null($request->vsNum2)){
+            $request->vsNum2 = 0;
+        }
         if(is_null($token)){
             return response()->json("Token is Null",500);
         }else{
@@ -236,7 +239,7 @@ class MobileController extends Controller
                     'userBy' => 'pat',
                 ];
                 VitalSign::create($data);
-                $status = 202;
+                $status = 200;
                 $response = [
                     "status" => $status,
                     "data"   => $vital,
