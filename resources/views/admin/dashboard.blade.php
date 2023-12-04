@@ -59,10 +59,10 @@
                       <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                      <h4>According to the months</h4>
+                      <h4>According to the Vital Types</h4>
                       <div class="widget_summary">
                           <div class="w_left w_25">
-                              <span>January</span>
+                              <span>Temp</span>
                           </div>
                           <div class="w_center w_55">
                               <div class="progress">
@@ -79,7 +79,7 @@
 
                       <div class="widget_summary">
                           <div class="w_left w_25">
-                              <span>February</span>
+                              <span>Suger</span>
                           </div>
                           <div class="w_center w_55">
                               <div class="progress">
@@ -95,7 +95,7 @@
                       </div>
                       <div class="widget_summary">
                           <div class="w_left w_25">
-                              <span>March</span>
+                              <span>Pressure Blood</span>
                           </div>
                           <div class="w_center w_55">
                               <div class="progress">
@@ -240,8 +240,8 @@
                               <li><a href="#/wheelchair"><i class="fa fa-wheelchair"></i> View patients</a> </li>
                               <li><a href="#/user-md"><i class="fa fa-user-md"></i> View doctors</a>
                               </li>
-                          
-                      
+
+
                               <li><a href="#/sign-out"><i class="fa fa-sign-out"></i> Logout</a>
                               </li>
                           </ul>
