@@ -23,3 +23,7 @@ Route::post('/verify', 'MobileController@checkVerify');
 Route::get('/appointment/getcount','MobileController@readCountAppointment');
 Route::get('/appointment/list','MobileController@getAppointmentlist');
 Route::put('/appointment/patupdate','MobileController@updateAppointmentByPat');
+// vital
+Route::get('/vital/list','MobileController@getVitallist');
+Route::post('/vital/create','MobileController@createVital');
+Route::delete('/vital/destroy','MobileController@deleteVital');

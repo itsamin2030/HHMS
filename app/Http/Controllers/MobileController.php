@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use App\Patient;
+use App\VitalSign;
 use DateTime;
 use Illuminate\Http\Request;
 use App\Verify\Service;
@@ -177,4 +178,76 @@ class MobileController extends Controller
             }
         }
     }
+
+    public function getVitallist (Request $request){
+        $token = $request->token;
+        if(is_null($token)){
+            return response()->json("Token is Null",500);
+        }else{
+            if(Patient::where('token',$token)->exists()){
+                $pat = Patient::where('token',$token)->first();
+                $vitallist = VitalSign::where('pat_id','=',$pat->pat_id)->orderByDesc('created_at')->get();
+                $status = 200;
+                $response = [
+                    "status" => $status,
+                    "vitals"   => $vitallist,
+                ];
+                return response()->json($response,$status);
+            }else{
+                return response()->json("Token is Not Matched",500);
+            }
+        }
+    }
+
+    public function deleteVital (Request $request){
+        $token = $request->token;
+        $vitalId = $request->vitalId;
+        if(is_null($token)){
+            return response()->json("Token is Null",500);
+        }else{
+            if(Patient::where('token',$token)->exists()){
+                $pat = Patient::where('token',$token)->first();
+                $vitallist = VitalSign::where('id','=',$vitalId)->delete();
+                $status = 200;
+                $response = [
+                    "status" => $status,
+                    "data"   => $vitallist,
+                ];
+                return response()->json($response,$status);
+            }else{
+                return response()->json("Token is Not Matched",500);
+            }
+        }
+    }
+
+    public function createVital (Request $request){
+        $token = $request->token;
+        if(is_null($token)){
+            return response()->json("Token is Null",500);
+        }else{
+            if(Patient::where('token',$token)->exists()){
+                $pat = Patient::where('token',$token)->first();
+                $type = '`'.$request->vitaltype.'`';
+                $vital = new VitalSign;
+                $data = [
+                    'pat_id' => $request->vitalId,
+                    'vsNum' => $request->vsNum,
+                    'vsNum2' => $request->vsNum2,
+                    'type' => $request->vitaltype,
+                    'userBy' => 'pat',
+                ];
+                VitalSign::create($data);
+                $status = 202;
+                $response = [
+                    "status" => $status,
+                    "data"   => $vital,
+                ];
+                return response()->json($response, $status);
+            }else{
+                return response()->json("Token is Not Matched",500);
+            }
+        }
+    }
+
+
 }
