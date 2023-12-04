@@ -46,11 +46,9 @@
                     </ul>
                   </li>
 
-                  <li><a><i class="fas fa-pills"></i> @lang('admin_menu.medicine') <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fas fa-pills"></i> @lang('admin_menu.vitalsigns_list') <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{route('medicine_category.index')}}">@lang('admin_menu.medicine_cat')</a></li>
-                      <li><a href="{{route('medicine.index')}}">@lang('admin_menu.medicine_list')</a></li>
-                      <li><a href="{{route('medicine.create')}}">@lang('admin_menu.add_medicine')</a></li>
+                      <li><a href="{{route('vitalsign.index')}}">@lang('admin_menu.vitalsigns_list')</a></li>
                     </ul>
                   </li>
 

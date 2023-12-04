@@ -28,8 +28,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('appointment.report', 'AppointmentController@writereport')->name('appointment.report');
     Route::post('appointment.updateDatetime', 'AppointmentController@updateDatetime');
     Route::get('appointment.show', 'AppointmentController@show');
-    Route::resource('appointmentReport', 'AppointmentReportController');
-    Route::get('appointmentReport.show', 'AppointmentReportController@show');
+    // Vitalsign
+    Route::resource('vitalsign', 'VitalsignController');
+    Route::get('vitalsign.success', 'VitalsignController@success');
+    Route::get('vitalsign.show', 'VitalsignController@show');
+    Route::get('vitalsign.update', 'VitalsignController@update');
+
 });
 
 Route::get('appointment/patient/{id}', 'AppointmentController@patient');

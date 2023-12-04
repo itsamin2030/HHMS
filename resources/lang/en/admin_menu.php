@@ -64,9 +64,13 @@ return [
     'app_confirm' => 'Confirmed',
     'app_reject' => 'Rejected',
 
-    'hrm' => 'HRM',
-    'emp_roles' => 'Employee Roles',
-    'emp_list' => 'Employee List',
+    'vitalsigns' => 'Vital Signs',
+    'vitalsigns_list' => 'Vital Signs List',
+    'vitalsign' => 'Vital Sign',
+    'vitalsign_type' => 'Vital Type',
+    'vitalBy' => 'Vital added By',
+    'vitalDate' => 'Vital Date',
+    'add_vitalsign' => 'Add Vitalsign',
     'add_emp' => 'Add Employee',
 
     'finance' => 'Financial Activities',
