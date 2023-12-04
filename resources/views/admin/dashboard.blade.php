@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title') Hospital Management System @endsection
+@section('title') HHMS @endsection
 @section('content')
 
         <!-- page content -->
