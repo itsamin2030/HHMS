@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('asset/assets/images/favicon.png')}}">
-    <title>Hospital Management System</title>
+    <title>HHMS</title>
     <link href="{{asset('asset/dist/css/style.min.css')}}" rel="stylesheet">
 </head>
 
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                       <button class="btn btn-block btn-lg btn-info" type="submit">Sign Up</button>
-                       
+
                     </form>
                 </div>
             </div>

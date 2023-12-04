@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('asset/assets/images/favicon.png')}}">
-    <title>Hospital Management System</title>
+    <title>HHMS</title>
     <link href="{{asset('asset/dist/css/style.min.css')}}" rel="stylesheet">
 </head>
 
@@ -96,23 +96,23 @@
         </div>
 
     </div>
- 
+
     <script src="{{asset('asset/assets/libs/jquery/dist/jquery.min.js')}}"></script>
 
     <script src="{{asset('asset/assets/libs/popper.js/dist/umd/popper.min.js')}}"></script>
     <script src="{{asset('asset/assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
- 
+
     <script>
 
     $('[data-toggle="tooltip"]').tooltip();
     $(".preloader").fadeOut();
-  
+
     $('#to-recover').on("click", function() {
         $("#loginform").slideUp();
         $("#recoverform").fadeIn();
     });
     $('#to-login').click(function(){
-        
+
         $("#recoverform").hide();
         $("#loginform").fadeIn();
     });
