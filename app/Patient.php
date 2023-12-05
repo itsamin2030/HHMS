@@ -19,7 +19,7 @@ class Patient extends Model
     	return [
 	    	'pat_name'           => 'required',
             'pat_grName'             => 'required',
-            'pat_grPhone'            => 'required|unique',
+            'pat_grPhone'            => 'required',
             'gender'             => 'required',
             'birth_year'         => 'required',
             'pat_dist'         => 'required',
