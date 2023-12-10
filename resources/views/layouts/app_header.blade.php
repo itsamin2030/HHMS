@@ -29,7 +29,7 @@
                         <span>Settings</span>
                       </a>
                   <a class="dropdown-item"  href="javascript:;">Help</a>
-                                
+
                   </div>
                 </li>
 
@@ -99,13 +99,12 @@
                 </li>
 
                 <li class="nav-item dropdown open" style="padding-right: 15px;">
-                <img src="/{{session()->get('locale')}}.jpg" class="flag" alt="flag">
+                <img src="flags/{{Config::get('app.locale')}}.png" class="flag" alt="flag">
                  <select name="lang" id="lang">
                    <option value="en" @if(session()->get('locale') == 'en') {{'selected'}} @endif>en</option>
-                   <option value="bn" @if(session()->get('locale') == 'bn') {{'selected'}} @endif>bn</option>
                    <option value="ar" @if(session()->get('locale') == 'ar') {{'selected'}} @endif>ar</option>
-                 </select> 
-                 
+                 </select>
+
                 </li>
 
               </ul>
