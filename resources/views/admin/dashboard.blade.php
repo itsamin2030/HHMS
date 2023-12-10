@@ -109,38 +109,6 @@
                           </div>
                           <div class="clearfix"></div>
                       </div>
-                      <div class="widget_summary">
-                          <div class="w_left w_25">
-                              <span>April</span>
-                          </div>
-                          <div class="w_center w_55">
-                              <div class="progress">
-                                  <div class="progress-bar bg-red" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
-                                      <span class="sr-only">60% Complete</span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="w_right w_20">
-                              <span>3k</span>
-                          </div>
-                          <div class="clearfix"></div>
-                      </div>
-                      <div class="widget_summary">
-                          <div class="w_left w_25">
-                              <span>May</span>
-                          </div>
-                          <div class="w_center w_55">
-                              <div class="progress">
-                                  <div class="progress-bar bg-blue" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
-                                      <span class="sr-only">60% Complete</span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="w_right w_20">
-                              <span>1k</span>
-                          </div>
-                          <div class="clearfix"></div>
-                      </div>
 
                   </div>
               </div>
